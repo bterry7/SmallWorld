@@ -29,14 +29,13 @@ def smallWorld(monsters,curMon):
     n = 0
     matches = []    
     maxcounter = len(monsters)
-    curMon = stats[2] # this to be replaced with user feedback
     while (i < maxcounter):
         # print(curMon)
         test = []
         while(n<5):
             # print(n)
             # print(stats[i][n+1])
-            if stats[i][n+1] == curMon[n+1]:
+            if monsters[i][n+1] == curMon[n+1]:
                 test.append(1)
             else:
                 test.append(0)
@@ -47,20 +46,12 @@ def smallWorld(monsters,curMon):
         i+=1
     return matches
 
-handMonSelected []
+handMonSelected = []
 # Methods for widget buttons
-def selectedHand(event):
-    print(state)
+def cardSelect(event,listOpt,keys):
     state = [1, 0, 0]
+    print(state)
     handMonSelected = repr(handMon[handList.get(handList.curselection())])
-    drawGenFrame(state)
-
-def selectedBridge(event):
-    state = [0, 0, 0]
-    drawGenFrame(state)
-
-def selectedDeck(event):
-    state = [0, 0, 0]
     drawGenFrame(state)
 
 def resetHand():
@@ -77,9 +68,13 @@ def resetAll():
     state = [0, 0, 0]
     drawGenFrame(state)
 
-state = [0,0,0]
 
 def drawGenFrame(state):
+
+    global handList
+    global bridgeList
+    global deckList
+    
     # Column Labels
     handLabel = Label(general,text="Monster in Hand").grid(row=0,column=0)
     handLabel = Label(general,text="Bridge").grid(row=0,column=1)
@@ -101,9 +96,9 @@ def drawGenFrame(state):
             handList = Listbox(general,listvariable=Variable(value=list(handMon.keys())),selectmode=SINGLE,exportselection=FALSE)
             bridgeList = Listbox(general,listvariable=Variable(value=list(bridgeMon.keys())),selectmode=SINGLE,exportselection=FALSE)
             deckList = Listbox(general,listvariable=Variable(value=list(deckMon.keys())),selectmode=SINGLE,exportselection=FALSE)
-            handList.bind("<<ListboxSelected>>",selectedHand) # this is called "binding"
-            bridgeList.bind("<<ListboxSelected>>",selectedBridge) # this is called "binding"
-            deckList.bind("<<ListboxSelected>>",selectedDeck) # this is called "binding"
+            handList.bind("<<ListboxSelect>>",lambda event: cardSelect(event,1)) # this is called "binding"
+            bridgeList.bind("<<ListboxSelect>>",lambda event: cardSelect(event,2)) # this is called "binding"
+            deckList.bind("<<ListboxSelect>>",lambda event: cardSelect(event,3)) # this is called "binding"
             handList.grid(row = 1,column=0)
             bridgeList.grid(row = 1,column=1)
             deckList.grid(row = 1,column=2)
@@ -131,9 +126,9 @@ def drawGenFrame(state):
             handList = Listbox(general,listvariable=Variable(value=list(handMon.keys())),selectmode=SINGLE,exportselection=FALSE)
             bridgeList = Listbox(general,listvariable=Variable(value=list(bridgeMon.keys())),selectmode=SINGLE,exportselection=FALSE)
             deckList = Listbox(general,listvariable=Variable(value=list(deckMon.keys())),selectmode=SINGLE,exportselection=FALSE)
-            handList.bind("<<handSelect>>",selectedHand) # this is called "binding"
-            bridgeList.bind("<<bridgeSelect>>",selectedBridge) # this is called "binding"
-            deckList.bind("<<deckSelect>>",selectedDeck) # this is called "binding"
+            handList.bind("<<ListboxSelect>>",lambda event: cardSelect(event,1)) # this is called "binding"
+            bridgeList.bind("<<ListboxSelect>>",lambda event: cardSelect(event,2)) # this is called "binding"
+            deckList.bind("<<ListboxSelect>>",lambda event: cardSelect(event,3)) # this is called "binding"
             handList.grid(row = 1,column=0)
             bridgeList.grid(row = 1,column=1)
             deckList.grid(row = 1,column=2)
@@ -150,41 +145,9 @@ def drawGenFrame(state):
             statsLabel = Label(general,text=repr(bridgeMon[bridgeList.get(bridgeList.curselection())])).grid(row=6,column=1)
             statsLabel = Label(general,text=repr(deckMon[deckList.get(deckList.curselection())])).grid(row=6,column=2)
         
-mylabel = Label(my_frame1,text=repr(countries[handList.get(handList.curselection())])).pack()
-          Label(general,text=repr(handMon[handList.get(handList.curselection())])).grid(row=6,column=0)
-
 # Create Widget
 
-        '''
-        case [1, 0, 0]: # First Card only selected: show bridge options 
-            
-        case [0, 0, 1]: # Last Card Only selected: show bridge options
-
-        case [0, 1, 0]: # Bridge Only selected: show first and last options
-            
-        case [1, 1, 0]: # First Card and Bridge selected: show last card options
-            
-        case [0, 1, 1]: # Last Card and Bridge selected: show first card options
-            
-        case [1, 0, 1]: # First and Last Card selected: show bridge options
-                   
-                   
-                   handList = ttk.Combobox(general,value=list(handMon.keys()))
-            bridgeList = ttk.Combobox(general,value=list(bridgeMon.keys()))
-            deckList = ttk.Combobox(general,value=list(deckMon.keys()))
-            handList.current(0)
-            handList.bind("<<ComboboxSelected>>",selectedHand) # this is called "binding"
-            bridgeList.current(0)
-            bridgeList.bind("<<ComboboxSelected>>",selectedBridge) # this is called "binding"
-            deckList.current(0)
-            deckList.bind("<<ComboboxSelected>>",selectedDeck) # this is called "binding"
-            handList.grid(row = 1,column=0)
-            bridgeList.grid(row = 1,column=1)
-            deckList.grid(row = 1,column=2)
-        
-         
-           '''
-
+       
 root = Tk()
 totHeight = 750
 totWidth = 1500
@@ -207,5 +170,5 @@ handMon = monsters
 bridgeMon = monsters
 deckMon = monsters
 
-drawGenFrame(state)
+drawGenFrame([0,0,0])
 root.mainloop()

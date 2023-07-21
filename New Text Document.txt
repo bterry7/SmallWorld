@@ -1,0 +1,29 @@
+ '''
+        case [1, 0, 0]: # First Card only selected: show bridge options 
+            
+        case [0, 0, 1]: # Last Card Only selected: show bridge options
+
+        case [0, 1, 0]: # Bridge Only selected: show first and last options
+            
+        case [1, 1, 0]: # First Card and Bridge selected: show last card options
+            
+        case [0, 1, 1]: # Last Card and Bridge selected: show first card options
+            
+        case [1, 0, 1]: # First and Last Card selected: show bridge options
+                   
+                   
+                   handList = ttk.Combobox(general,value=list(handMon.keys()))
+            bridgeList = ttk.Combobox(general,value=list(bridgeMon.keys()))
+            deckList = ttk.Combobox(general,value=list(deckMon.keys()))
+            handList.current(0)
+            handList.bind("<<ComboboxSelected>>",selectedHand) # this is called "binding"
+            bridgeList.current(0)
+            bridgeList.bind("<<ComboboxSelected>>",selectedBridge) # this is called "binding"
+            deckList.current(0)
+            deckList.bind("<<ComboboxSelected>>",selectedDeck) # this is called "binding"
+            handList.grid(row = 1,column=0)
+            bridgeList.grid(row = 1,column=1)
+            deckList.grid(row = 1,column=2)
+        
+         
+           '''

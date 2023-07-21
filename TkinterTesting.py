@@ -5,10 +5,11 @@ from tkinter import *
 from tkinter import ttk
 
 
-def selected(event):
-
-    mylabel = Label(my_frame1,text=repr(countries[handList.get(handList.curselection())])).pack()
-
+def selected(event,option):
+    if option == 1:
+        mylabel = Label(my_frame1,text=repr(countries[handList.get(handList.curselection())])).pack()
+    else:
+        mylabel = Label(my_frame1,text="Test").pack()
 countries = {
         "1": 'Antigua and Barbuda', 
         "2": 'Bahamas',
@@ -38,8 +39,10 @@ my_notebook.add(my_frame1,text = "All Cards")
 my_notebook.add(my_frame2,text = "Deck Build+Test")
 
 handList = Listbox(my_frame1,listvariable=Variable(value=list(countries.keys())),selectmode=SINGLE)
-handList.bind("<<ListboxSelect>>",selected) # this is called "binding"
+handList.bind("<<ListboxSelect>>",lambda event: selected(event,1)) # this is called "binding"
 handList.pack()
 
 
 root.mainloop()
+
+
