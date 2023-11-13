@@ -38,10 +38,15 @@ my_frame2.pack(fill="both",expand=1)
 my_notebook.add(my_frame1,text = "All Cards")
 my_notebook.add(my_frame2,text = "Deck Build+Test")
 
+listFrame = Frame(my_frame1)
 handList = Listbox(my_frame1,listvariable=Variable(value=list(countries.keys())),selectmode=SINGLE)
 handList.bind("<<ListboxSelect>>",lambda event: selected(event,1)) # this is called "binding"
-handList.pack()
+handList.pack(side = LEFT, fill = BOTH)
 
+scrollbar = Scrollbar(listFrame, orient="vertical",command=handList.yview).pack(side="right", fill="y")
+
+handList.selection_set(3)
+mylabel = Label(my_frame1,text=repr(countries[handList.get(handList.curselection())])).pack()
 
 root.mainloop()
 
